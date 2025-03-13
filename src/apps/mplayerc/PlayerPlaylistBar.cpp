@@ -289,7 +289,7 @@ CString CPlaylistItem::GetLabel(int i) const
 		if (m_type == file) {
 			const REFERENCE_TIME rt = m_duration;
 			if (rt > 0) {
-				str = ReftimeToString2(rt);
+				str = ReftimeToString2(rt, false);
 			}
 		} else if (m_type == device) {
 			// TODO

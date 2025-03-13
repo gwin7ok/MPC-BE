@@ -161,7 +161,7 @@ void CThumbsTaskDlg::SaveThumbnails(LPCWSTR thumbpath)
 
 	for (int i = 1, pics = cols * rows; i <= pics; i++) {
 		const REFERENCE_TIME rt = duration * i / (pics + 1);
-		const CStringW strTime = ReftimeToString2(rt);
+		const CStringW strTime = ReftimeToString2(rt, false);
 
 		m_pMainFrm->SeekTo(rt, false);
 

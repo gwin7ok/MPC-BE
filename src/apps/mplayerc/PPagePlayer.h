@@ -50,7 +50,7 @@ public:
 	BOOL m_bShowOSD     = FALSE;
 	BOOL m_bOSDFileName = FALSE;
 	BOOL m_bOSDSeekTime = FALSE;
-	BOOL m_bShowPlaybackTime = FALSE; // 再生時間の常時表示を有効にするかどうか
+	BOOL m_bOSDPlaybackTime = FALSE; // 再生時間の常時表示を有効にするかどうか
 	BOOL m_bHideCDROMsSubMenu = FALSE;
 	BOOL m_bPriority = FALSE;
 

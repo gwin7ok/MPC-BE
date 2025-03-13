@@ -1,3 +1,5 @@
+chcp 65001
+
 @ECHO OFF
 REM (C) 2009-2024 see Authors.txt
 REM

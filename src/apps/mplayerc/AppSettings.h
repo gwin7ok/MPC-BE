@@ -488,6 +488,7 @@ public:
 			UINT Enable : 1;
 			UINT FileName : 1;
 			UINT SeekTime : 1;
+			UINT PlaybackTime : 1;
 		};
 		UINT value;
 	} ShowOSD;
@@ -885,7 +886,7 @@ public:
 
 	int				nCmdVolume;
 
-	bool bShowPlaybackTime; // 再生時間の常時表示を有効にするかどうか
+
 
 private :
 	LPCWSTR			SrcFiltersKeys[SRC_COUNT];

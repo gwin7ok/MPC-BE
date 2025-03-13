@@ -1425,7 +1425,7 @@ BOOL CMainFrame::OnTouchInput(CPoint pt, int nInputNumber, int nInputsCount, PTO
 									const bool bShowMilliSecs = m_bShowMilliSecs || m_wndSubresyncBar.IsWindowVisible();
 
 									m_wndStatusBar.SetStatusTimer(rtNewPos, stop, bShowMilliSecs, GetTimeFormat());
-									m_OSD.DisplayMessage(OSD_TOPLEFT, m_wndStatusBar.GetStatusTimer(), 1000);
+									DisplayPlaybackTime(3000, 100); // 3秒間表示、100ミリ秒ごとに更新
 									m_wndStatusBar.SetStatusTimer(rtPos, stop, bShowMilliSecs, GetTimeFormat());
 								}
 							}
@@ -2725,7 +2725,7 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
                     
                     // もし「シークタイムを表示する」設定が有効であれば、再生時間表示タイマーを設定
                     if (AfxGetAppSettings().ShowOSD.Enable && AfxGetAppSettings().ShowOSD.SeekTime) {
-                        SetTimer(TIMER_PLAYBACK_TIME, 1000, nullptr); // 1秒ごとに更新
+                        DisplayPlaybackTime(3000, 100); // 3秒間表示、100ミリ秒ごとに更新
                     }
                 }
             }
@@ -2733,7 +2733,7 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
         break;
         case TIMER_PLAYBACK_TIME: {
             const CAppSettings& s = AfxGetAppSettings();
-            bool bShowOSD = s.ShowOSD.Enable && s.ShowOSD.SeekTime && s.bShowPlaybackTime;
+            bool bShowOSD = s.ShowOSD.Enable && s.ShowOSD.SeekTime && s.ShowOSD.PlaybackTime;
 
             if (bShowOSD) {
                 DisplayPlaybackTime(0, 100); // 常に表示し続ける
@@ -3127,8 +3127,8 @@ void CMainFrame::DisplayPlaybackTime(int displayMilliseconds, int refreshMillise
             break;
     }
 
-    CString strNow = ReftimeToString2(rtNow);
-    CString strDur = ReftimeToString2(rtDur);
+    CString strNow = ReftimeToString2(rtNow,false);
+    CString strDur = ReftimeToString2(rtDur,false);
     strOSD.Format(L"%s / %s", strNow, strDur); // フォーマットを統一
     m_OSD.DisplayMessage(OSD_TOPLEFT, strOSD, refreshMilliseconds); // 表示ミリ秒に基づいて表示
 
@@ -8142,7 +8142,7 @@ void CMainFrame::OnPlayPlay()
 	}
 
     // 再生時間の常時表示機能
-    if (AfxGetAppSettings().bShowPlaybackTime) {
+    if (AfxGetAppSettings().ShowOSD.PlaybackTime) {
         SetTimer(TIMER_PLAYBACK_TIME, 1000, nullptr); // 1秒ごとに更新
     }
 
@@ -9606,16 +9606,7 @@ void CMainFrame::OnNavigateSkip(UINT nID)
 					SendStatusMessage(ResStr(IDS_AG_CHAPTER2) + name, 3000);
 				}
 
-				REFERENCE_TIME rtDur;
-				m_pMS->GetDuration(&rtDur);
-				CString strOSD;
-				CString chapName;
-				if (name.Length()) {
-					chapName.Format(L" - \"%s\"", name);
-				}
-				strOSD.Format(L"%s/%s %s%d/%u%s", ReftimeToString2(rt), ReftimeToString2(rtDur), ResStr(IDS_AG_CHAPTER2), i + 1, nChapters, chapName);
-				m_OSD.DisplayMessage(OSD_TOPLEFT, strOSD, 3000);
-				return;
+				DisplayPlaybackTime(3000, 100); // 3秒間表示、100ミリ秒ごとに更新
 			}
 		}
 
@@ -9757,9 +9748,7 @@ void CMainFrame::OnNavigateSkip(UINT nID)
 			long lSignalStrength;
 			m_pAMTuner->SignalPresent(&lSignalStrength); // good if AMTUNER_SIGNALPRESENT
 
-			CString strOSD;
-			strOSD.Format(ResStr(IDS_CAPTURE_CHANNEL_FREQ), lChannel, lFreq/1000000.0);
-			m_OSD.DisplayMessage(OSD_TOPLEFT, strOSD, 3000);
+			DisplayPlaybackTime(3000, 100); // 3秒間表示、100ミリ秒ごとに更新
 		}
 	}
 }
@@ -10123,7 +10112,7 @@ void CMainFrame::OnNavigateChapters(UINT nID)
 				if (name.Length()) {
 					chapName.Format(L" - \"%s\"", name);
 				}
-				strOSD.Format(L"%s/%s %s%u/%u%s", ReftimeToString2(rt), ReftimeToString2(rtDur), ResStr(IDS_AG_CHAPTER2), id + 1, m_pCB->ChapGetCount(), chapName);
+				strOSD.Format(L"%s/%s %s%u/%u%s", ReftimeToString2(rt,false), ReftimeToString2(rtDur,false), ResStr(IDS_AG_CHAPTER2), id + 1, m_pCB->ChapGetCount(), chapName);
 				m_OSD.DisplayMessage(OSD_TOPLEFT, strOSD, 3000);
 			}
 			return;
@@ -15641,7 +15630,7 @@ void CMainFrame::SetupNavChaptersSubMenu()
 					flags |= MF_CHECKED | MFT_RADIOCHECK;
 				}
 
-				const CString time = L"[" + ReftimeToString2(Item.Duration()) + L"]";
+				const CString time = L"[" + ReftimeToString2(Item.Duration(),false) + L"]";
 				submenu.AppendMenuW(flags, id++, GetFileName(Item.m_strFileName) + '\t' + time);
 			}
 		} else if (m_youtubeUrllist.size() > 1) {
@@ -15704,7 +15693,7 @@ void CMainFrame::SetupNavChaptersSubMenu()
 					}
 				}
 
-				CString time = L"[" + ReftimeToString2(rt) + L"]";
+				CString time = L"[" + ReftimeToString2(rt,false) + L"]";
 				if (name.IsEmpty()) {
 					name = time;
 				} else {

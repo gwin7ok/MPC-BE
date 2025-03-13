@@ -193,7 +193,7 @@
 #define IDS_RS_OSD_REMAINING_TIME			L"RemainingTime"
 #define IDS_RS_OSD_LOCAL_TIME				L"LocalTime"
 #define IDS_RS_OSD_FILE_NAME				L"FileName"
-#define IDS_RS_SHOW_PLAYBACK_TIME			L"PlayBackTime"
+#define IDS_RS_OSD_PLAYBACK_TIME			L"PlayBackTime"
 
 // Theme
 #define IDS_R_THEME							L"Theme"

@@ -107,7 +107,7 @@ CPPageFileInfoDetails::CPPageFileInfoDetails(const CString& fn, IFilterGraph* pF
 	CComQIPtr<IMediaSeeking> pMS = pFG;
 
 	if (pMS && SUCCEEDED(pMS->GetDuration(&rtDur)) && rtDur > 0) {
-		m_time = ReftimeToString2(rtDur);
+		m_time = ReftimeToString2(rtDur,false);
 	}
 
 	CSize wh(0, 0), arxy(0, 0);
