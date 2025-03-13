@@ -2734,52 +2734,24 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
         case TIMER_PLAYBACK_TIME: {
             const CAppSettings& s = AfxGetAppSettings();
             bool bShowOSD = s.ShowOSD.Enable && s.ShowOSD.SeekTime && s.bShowPlaybackTime;
-            
+
             if (bShowOSD) {
-                CString strOSD;
-                REFERENCE_TIME rtNow = 0;
-                REFERENCE_TIME rtDur = 0;
-
-                switch (GetPlaybackMode()) {
-                    case PM_FILE:
-                        if (m_pMS) {
-                            m_pMS->GetCurrentPosition(&rtNow);
-                            m_pMS->GetDuration(&rtDur);
-                        }
-                        break;
-                    case PM_DVD:
-                        DVD_PLAYBACK_LOCATION2 Location;
-                        if (m_pDVDI && m_pDVDI->GetCurrentLocation(&Location) == S_OK) {
-                            double fps = Location.TimeCodeFlags == DVD_TC_FLAG_25fps ? 25.0
-                                            : Location.TimeCodeFlags == DVD_TC_FLAG_30fps ? 30.0
-                                            : Location.TimeCodeFlags == DVD_TC_FLAG_DropFrame ? 30 / 1.001
-                                            : 25.0;
-
-                            rtNow = HMSF2RT(Location.TimeCode, fps);
-
-                            DVD_HMSF_TIMECODE tcDur;
-                            ULONG ulFlags;
-                            if (SUCCEEDED(m_pDVDI->GetTotalTitleTime(&tcDur, &ulFlags))) {
-                                rtDur = HMSF2RT(tcDur, fps);
-                            }
-                        }
-                        break;
-                    case PM_CAPTURE:
-                        if (m_pMS) {
-                            m_pMS->GetCurrentPosition(&rtNow);
-                            m_pMS->GetDuration(&rtDur);
-                        }
-                        break;
-                }
-
-                CString strNow = ReftimeToString2(rtNow);
-                CString strDur = ReftimeToString2(rtDur);
-                strOSD.Format(L"%s / %s", strNow, strDur); // フォーマットを統一
-                m_OSD.DisplayMessage(OSD_TOPLEFT, strOSD, 1000); // 1秒間表示
+                DisplayPlaybackTime(0, 100); // 常に表示し続ける
+            } else {
+                DisplayPlaybackTime(3000, 100); // 3秒間表示、100ミリ秒ごとに更新
             }
-
-            // 再度タイマーを設定して、再生時間を常に表示する
-            SetTimer(TIMER_PLAYBACK_TIME, 100, nullptr); // 0.1秒ごとに更新
+        }
+        break;
+        case TIMER_REFRESH_PLAYBACK_TIME: {
+            // 再生時間を更新
+            DisplayPlaybackTime(3000, 100); // 3秒間表示、100ミリ秒ごとに更新
+        }
+        break;
+        case TIMER_HIDE_PLAYBACK_TIME: {
+            // 再生時間の表示を消す
+            m_OSD.ClearMessage(OSD_TOPLEFT);
+            KillTimer(TIMER_REFRESH_PLAYBACK_TIME);
+            KillTimer(TIMER_HIDE_PLAYBACK_TIME);
         }
         break;
 
@@ -3115,6 +3087,58 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
 	__super::OnTimer(nIDEvent);
 
 
+}
+
+void CMainFrame::DisplayPlaybackTime(int displayMilliseconds, int refreshMilliseconds)
+{
+    CString strOSD;
+    REFERENCE_TIME rtNow = 0;
+    REFERENCE_TIME rtDur = 0;
+
+    switch (GetPlaybackMode()) {
+        case PM_FILE:
+            if (m_pMS) {
+                m_pMS->GetCurrentPosition(&rtNow);
+                m_pMS->GetDuration(&rtDur);
+            }
+            break;
+        case PM_DVD:
+            DVD_PLAYBACK_LOCATION2 Location;
+            if (m_pDVDI && m_pDVDI->GetCurrentLocation(&Location) == S_OK) {
+                double fps = Location.TimeCodeFlags == DVD_TC_FLAG_25fps ? 25.0
+                                : Location.TimeCodeFlags == DVD_TC_FLAG_30fps ? 30.0
+                                : Location.TimeCodeFlags == DVD_TC_FLAG_DropFrame ? 30 / 1.001
+                                : 25.0;
+
+                rtNow = HMSF2RT(Location.TimeCode, fps);
+
+                DVD_HMSF_TIMECODE tcDur;
+                ULONG ulFlags;
+                if (SUCCEEDED(m_pDVDI->GetTotalTitleTime(&tcDur, &ulFlags))) {
+                    rtDur = HMSF2RT(tcDur, fps);
+                }
+            }
+            break;
+        case PM_CAPTURE:
+            if (m_pMS) {
+                m_pMS->GetCurrentPosition(&rtNow);
+                m_pMS->GetDuration(&rtDur);
+            }
+            break;
+    }
+
+    CString strNow = ReftimeToString2(rtNow);
+    CString strDur = ReftimeToString2(rtDur);
+    strOSD.Format(L"%s / %s", strNow, strDur); // フォーマットを統一
+    m_OSD.DisplayMessage(OSD_TOPLEFT, strOSD, refreshMilliseconds); // 表示ミリ秒に基づいて表示
+
+    if (displayMilliseconds > 0) {
+        // 表示時間が経過したら表示を消すためのタイマーを設定
+        SetTimer(TIMER_HIDE_PLAYBACK_TIME, displayMilliseconds, nullptr);
+    }
+
+    // 表示を更新するためのタイマーを設定
+    SetTimer(TIMER_REFRESH_PLAYBACK_TIME, refreshMilliseconds, nullptr);
 }
 
 bool CMainFrame::DoAfterPlaybackEvent()

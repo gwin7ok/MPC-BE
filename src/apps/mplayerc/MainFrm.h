@@ -396,7 +396,9 @@ public:
 		TIMER_FLYBARWINDOWHIDER,
 		TIMER_DM_AUTOCHANGING,
 		TIMER_PAUSE,
-		TIMER_PLAYBACK_TIME
+		TIMER_PLAYBACK_TIME,
+        TIMER_REFRESH_PLAYBACK_TIME,
+        TIMER_HIDE_PLAYBACK_TIME
 	};
 
 	void SetColorMenu();
@@ -1399,6 +1401,7 @@ private:
 
 	void SaveHistory();
 
+	void DisplayPlaybackTime(int displayMilliseconds, int refreshMilliseconds);
     // 他のパブリックメソッド...
     REFERENCE_TIME GetPlaybackTime() const;
 };
