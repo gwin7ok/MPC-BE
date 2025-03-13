@@ -121,7 +121,7 @@
 #define IDS_RS_WEBSERVERCGI					L"CGIHandlers"
 #define IDS_RS_WEBDEFINDEX					L"DefaultPage"
 
-// ÎnlineServices
+// ï¿½nlineServices
 #define IDS_R_ONLINESERVICES				L"OnlineServices"
 #define IDS_R_YOUTUBECACHE					L"OnlineServices\\YoutubeCache"
 #define IDS_RS_YOUTUBE_PAGEPARSER			L"YoutubePageParser"
@@ -193,6 +193,7 @@
 #define IDS_RS_OSD_REMAINING_TIME			L"RemainingTime"
 #define IDS_RS_OSD_LOCAL_TIME				L"LocalTime"
 #define IDS_RS_OSD_FILE_NAME				L"FileName"
+#define IDS_RS_SHOW_PLAYBACK_TIME			L"PlayBackTime"
 
 // Theme
 #define IDS_R_THEME							L"Theme"

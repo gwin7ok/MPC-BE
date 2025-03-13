@@ -294,6 +294,7 @@ BEGIN
     CONTROL         "Ցուցադրել OSD-ն (պահ.է վերամեկնարկում)",IDC_SHOW_OSD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,129,159,156,9
     CONTROL         "Show name of media file",IDC_CHECK14,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,138,171,148,9
     CONTROL         "Show seek time",IDC_CHECK15,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,138,183,148,9
+    CONTROL         "Always display the playback time",IDC_CHECK_SHOW_PLAYBACK_TIME,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,138,203,148,9
     CONTROL         "Անջատել 'Բացել սկավառակը' ընտրացանկը",IDC_CHECK10,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,129,196,156,9
     CONTROL         "Գործողության բարձր առաջնայնություն",IDC_CHECK9,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,129,208,156,9
     GROUPBOX        "Network timeouts",IDC_STATIC,124,222,167,41,WS_GROUP

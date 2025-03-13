@@ -395,7 +395,8 @@ public:
 		TIMER_STATUSERASER,
 		TIMER_FLYBARWINDOWHIDER,
 		TIMER_DM_AUTOCHANGING,
-		TIMER_PAUSE
+		TIMER_PAUSE,
+		TIMER_PLAYBACK_TIME
 	};
 
 	void SetColorMenu();
@@ -1397,4 +1398,7 @@ private:
 	bool m_bIsLiveOnline = false;
 
 	void SaveHistory();
+
+    // 他のパブリックメソッド...
+    REFERENCE_TIME GetPlaybackTime() const;
 };

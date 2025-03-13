@@ -643,7 +643,7 @@
 #define IDC_CHECK13                     10233
 #define IDC_CHECK14                     10234
 #define IDC_CHECK15                     10235
-//
+#define IDC_CHECK_SHOW_PLAYBACK_TIME  10236  // 再生時間を常時表示する
 #define IDC_COMBO1                      10241
 #define IDC_COMBO2                      10242
 #define IDC_COMBO3                      10243

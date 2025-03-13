@@ -187,6 +187,8 @@ CAppSettings::CAppSettings()
 	AudioFiltersKeys[ADEC_WMALOSSLESS]		= L"adec_wmalossless";
 	AudioFiltersKeys[ADEC_WMAVOICE]			= L"adec_wmavoice";
 	AudioFiltersKeys[ADEC_PCM_ADPCM]		= L"adec_pcm_adpcm";
+
+	bShowPlaybackTime = false; // デフォルトでは無効
 }
 
 void CAppSettings::CreateCommands()
@@ -1240,6 +1242,7 @@ void CAppSettings::LoadSettings(bool bForce/* = false*/)
 
 	// OSD
 	profile.ReadUInt(IDS_R_OSD, IDS_RS_SHOWOSD, ShowOSD.value);
+
 	profile.ReadInt(IDS_R_OSD, IDS_RS_OSD_SIZE, nOSDSize, 8, 40);
 	profile.ReadString(IDS_R_OSD, IDS_RS_OSD_FONT, strOSDFont);
 	profile.ReadBool(IDS_R_OSD, IDS_RS_OSD_FONTSHADOW, fFontShadow);
@@ -1252,6 +1255,7 @@ void CAppSettings::LoadSettings(bool bForce/* = false*/)
 	profile.ReadBool(IDS_R_OSD, IDS_RS_OSD_REMAINING_TIME, bOSDRemainingTime);
 	profile.ReadBool(IDS_R_OSD, IDS_RS_OSD_LOCAL_TIME, bOSDLocalTime);
 	profile.ReadBool(IDS_R_OSD, IDS_RS_OSD_FILE_NAME, bOSDFileName);
+	profile.ReadBool(IDS_R_OSD, IDS_RS_SHOW_PLAYBACK_TIME, bShowPlaybackTime);
 
 	// Theme
 	profile.ReadBool(IDS_R_THEME, IDS_RS_USEDARKTHEME, bUseDarkTheme);
@@ -1889,6 +1893,7 @@ void CAppSettings::SaveSettings()
 	profile.WriteBool(IDS_R_OSD, IDS_RS_OSD_REMAINING_TIME, bOSDRemainingTime);
 	profile.WriteBool(IDS_R_OSD, IDS_RS_OSD_LOCAL_TIME, bOSDLocalTime);
 	profile.WriteBool(IDS_R_OSD, IDS_RS_OSD_FILE_NAME, bOSDFileName);
+	profile.WriteBool(IDS_R_OSD, IDS_RS_SHOW_PLAYBACK_TIME, bShowPlaybackTime);
 
 	// Theme
 	profile.WriteBool(IDS_R_THEME, IDS_RS_USEDARKTHEME, bUseDarkTheme);
