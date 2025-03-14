@@ -69,5 +69,8 @@ MPC-BE makes use of the following 3rd party code:
 
 # MPC-BE
 
-New features added
-![Player Settings]("./docs/MPC-BE new function addition option screen.png")
+## 設定画面
+
+以下の設定画面の例では、再生時間を常に表示するオプションが有効になっています。
+
+![Player Settings](./docs/MPC-BE%20new%20function%20addition%20option%20screen.png)
