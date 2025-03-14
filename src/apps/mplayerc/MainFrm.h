@@ -7,7 +7,7 @@
  * MPC-BE is free software; you can redistribute it and/or modify
  * it under the terms of the GNU General Public License as published by
  * the Free Software Foundation; either version 3 of the License, or
- * (at your option) any later version.
+ * any later version.
  *
  * MPC-BE is distributed in the hope that it will be useful,
  * but WITHOUT ANY WARRANTY; without even the implied warranty of
@@ -1401,8 +1401,10 @@ private:
 
 	void SaveHistory();
 
+public:
 	void DisplayPlaybackTime(int displayMilliseconds, int refreshMilliseconds);
     void StopOSDPlaybackTime(); // OSDの再生時間表示を停止するメソッド
+    void StartOSDPlaybackTime(); // OSDの再生時間表示を開始するメソッド
     // 他のパブリックメソッド...
     REFERENCE_TIME GetPlaybackTime() const;
 };

@@ -2744,15 +2744,23 @@ void CMainFrame::OnTimer(UINT_PTR nIDEvent)
             }
         }
         break;
-        case TIMER_REFRESH_PLAYBACK_TIME: {
-            // 再生時間を更新
-            DisplayPlaybackTime(3000, 100); // 3秒間表示、100ミリ秒ごとに更新
-        }
-        break;
-        case TIMER_HIDE_PLAYBACK_TIME: {
+		case TIMER_REFRESH_PLAYBACK_TIME:{
+			const CAppSettings& s = AfxGetAppSettings();
+			bool bShowOSD = s.ShowOSD.Enable && s.ShowOSD.SeekTime && s.ShowOSD.PlaybackTime;
+
+			if (bShowOSD) {
+                DisplayPlaybackTime(0, 100); // 常に表示し続ける
+            } else {
+                DisplayPlaybackTime(3000, 100); // 3秒間表示、100ミリ秒ごとに更新
+            }
+		}
+		break;
+
+		case TIMER_HIDE_PLAYBACK_TIME: {
             // 再生時間の表示を消す
             m_OSD.ClearMessage(OSD_TOPLEFT);
-            KillTimer(TIMER_REFRESH_PLAYBACK_TIME);
+            KillTimer(TIMER_PLAYBACK_TIME);
+			KillTimer(TIMER_REFRESH_PLAYBACK_TIME);
             KillTimer(TIMER_HIDE_PLAYBACK_TIME);
         }
         break;
@@ -16304,6 +16312,19 @@ void CMainFrame::StopOSDPlaybackTime()
 	// OSDの再生時間表示をクリア
 	m_OSD.ClearMessage(OSD_TOPLEFT);
 }
+
+void CMainFrame::StartOSDPlaybackTime()
+{
+	// 再生時間表示を開始するためのタイマーを開始
+	SetTimer(TIMER_REFRESH_PLAYBACK_TIME, 1000, nullptr);
+	SetTimer(TIMER_HIDE_PLAYBACK_TIME, 5000, nullptr);
+
+	// OSDの再生時間表示を更新
+	DisplayPlaybackTime(5000, 1000);
+}
+
+
+
 
 ISubStream *InsertSubStream(std::list<CComPtr<ISubStream>>* subStreams, const CComPtr<ISubStream>& theSubStream)
 {

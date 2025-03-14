@@ -174,7 +174,7 @@ BOOL CPPagePlayer::OnInitDialog()
 
 BOOL CPPagePlayer::OnApply()
 {
-	UpdateData();
+	UpdateData(TRUE);
 
 	CAppSettings& s = AfxGetAppSettings();
 	auto pFrame = AfxGetMainFrame();
@@ -208,11 +208,13 @@ BOOL CPPagePlayer::OnApply()
 	s.bHideCDROMsSubMenu = !!m_bHideCDROMsSubMenu;
 	s.dwPriority = !m_bPriority ? NORMAL_PRIORITY_CLASS : ABOVE_NORMAL_PRIORITY_CLASS;
 	BOOL bShowOSDChanged = s.ShowOSD.Enable != m_bShowOSD;
+	BOOL bOSDPlaybackTimeChanged = s.ShowOSD.PlaybackTime != m_bOSDPlaybackTime;
 
 	s.ShowOSD.Enable   = m_bShowOSD ? 1 : 0;
 	s.ShowOSD.FileName = m_bOSDFileName ? 1 : 0;
 	s.ShowOSD.SeekTime = m_bOSDSeekTime ? 1 : 0;
 	s.ShowOSD.PlaybackTime = m_bOSDPlaybackTime ? 1 : 0;
+
 	if (bShowOSDChanged) {
 		if (s.ShowOSD.Enable) {
 			pFrame->m_OSD.Start(pFrame->m_pOSDWnd);
@@ -222,6 +224,15 @@ BOOL CPPagePlayer::OnApply()
 			pFrame->m_OSD.Stop();
 		}
 	}
+
+	if (bOSDPlaybackTimeChanged) {
+		if (s.ShowOSD.PlaybackTime) {
+			pFrame->StartOSDPlaybackTime();
+		} else {
+			pFrame->StopOSDPlaybackTime();
+		}
+	}
+
 	s.bRememberDVDPos          = !!m_bRememberDVDPos;
 	s.bRememberFilePos         = !!m_bRememberFilePos;
 	s.bRememberPlaylistItems   = !!m_bRememberPlaylistItems;
