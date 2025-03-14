@@ -489,6 +489,7 @@ public:
 			UINT FileName : 1;
 			UINT SeekTime : 1;
 			UINT PlaybackTime : 1;
+			UINT Frame : 1;
 		};
 		UINT value;
 	} ShowOSD;

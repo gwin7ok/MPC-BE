@@ -51,6 +51,7 @@ public:
 	BOOL m_bOSDFileName = FALSE;
 	BOOL m_bOSDSeekTime = FALSE;
 	BOOL m_bOSDPlaybackTime = FALSE; // 再生時間の常時表示を有効にするかどうか
+	BOOL m_bOSDFrame = FALSE; // フレーム表示を有効にするかどうか
 	BOOL m_bHideCDROMsSubMenu = FALSE;
 	BOOL m_bPriority = FALSE;
 

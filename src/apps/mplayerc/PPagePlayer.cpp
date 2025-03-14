@@ -49,6 +49,7 @@ void CPPagePlayer::DoDataExchange(CDataExchange* pDX)
 	DDX_Check(pDX, IDC_CHECK14,  m_bOSDFileName);
 	DDX_Check(pDX, IDC_CHECK15,  m_bOSDSeekTime);
 	DDX_Check(pDX, IDC_CHECK_SHOW_PLAYBACK_TIME, m_bOSDPlaybackTime);
+	DDX_Check(pDX, IDC_CHECK_SHOW_FRAME, m_bOSDFrame);
 	DDX_Check(pDX, IDC_DVD_POS,  m_bRememberDVDPos);
 	DDX_Check(pDX, IDC_FILE_POS, m_bRememberFilePos);
 	DDX_Check(pDX, IDC_CHECK2,   m_bRememberPlaylistItems);
@@ -69,6 +70,7 @@ BEGIN_MESSAGE_MAP(CPPagePlayer, CPPageBase)
 	ON_UPDATE_COMMAND_UI(IDC_CHECK14, OnUpdateOSD)
 	ON_UPDATE_COMMAND_UI(IDC_CHECK15, OnUpdateOSD)
 	ON_UPDATE_COMMAND_UI(IDC_CHECK_SHOW_PLAYBACK_TIME, OnUpdateOSD)
+	ON_UPDATE_COMMAND_UI(IDC_CHECK_SHOW_FRAME, OnUpdateOSD)
 END_MESSAGE_MAP()
 
 // CPPagePlayer message handlers
@@ -113,6 +115,7 @@ BOOL CPPagePlayer::OnInitDialog()
 	m_bOSDFileName				= s.ShowOSD.FileName;
 	m_bOSDSeekTime				= s.ShowOSD.SeekTime;
 	m_bOSDPlaybackTime 			= s.ShowOSD.PlaybackTime;
+	m_bOSDFrame	 				= s.ShowOSD.Frame;
 	m_bRememberDVDPos			= s.bRememberDVDPos;
 	m_bRememberFilePos			= s.bRememberFilePos;
 	m_bRememberPlaylistItems	= s.bRememberPlaylistItems;
@@ -209,11 +212,13 @@ BOOL CPPagePlayer::OnApply()
 	s.dwPriority = !m_bPriority ? NORMAL_PRIORITY_CLASS : ABOVE_NORMAL_PRIORITY_CLASS;
 	BOOL bShowOSDChanged = s.ShowOSD.Enable != m_bShowOSD;
 	BOOL bOSDPlaybackTimeChanged = s.ShowOSD.PlaybackTime != m_bOSDPlaybackTime;
+	BOOL bOSDFrameChanged = s.ShowOSD.Frame != m_bOSDFrame;
 
 	s.ShowOSD.Enable   = m_bShowOSD ? 1 : 0;
 	s.ShowOSD.FileName = m_bOSDFileName ? 1 : 0;
 	s.ShowOSD.SeekTime = m_bOSDSeekTime ? 1 : 0;
 	s.ShowOSD.PlaybackTime = m_bOSDPlaybackTime ? 1 : 0;
+	s.ShowOSD.Frame = m_bOSDFrame ? 1 : 0;
 
 	if (bShowOSDChanged) {
 		if (s.ShowOSD.Enable) {
