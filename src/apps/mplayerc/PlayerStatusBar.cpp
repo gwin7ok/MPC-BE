@@ -237,14 +237,20 @@ void CPlayerStatusBar::SetStatusTimer(REFERENCE_TIME rtNow, REFERENCE_TIME rtDur
 	REFERENCE_TIME rt = bRemainingTime ? rtDur - rtNow : rtNow;
 
 	CStringW strPos, strDur;
+	const CAppSettings& s = AfxGetAppSettings();
 
 	if (timeFormat == TIME_FORMAT_MEDIA_TIME) {
 		if (bShowMilliSecs) {
-			strPos = ReftimeToString(rt, bShowZeroHours);
-			strDur = ReftimeToString(rtDur, false);
+			strPos = ReftimeToString(rt, AfxGetAppSettings().bShowZeroHours);
+			strDur = ReftimeToString(rtDur, AfxGetAppSettings().bShowZeroHours);
 		} else {
-			strPos = ReftimeToString2(rt, bShowZeroHours, true,m_pMainFrame->m_pCAP->GetFPS());
-			strDur = ReftimeToString2(rtDur, false);
+			if(s.ShowOSD.Frame){
+				strPos = ReftimeToString2(rt, AfxGetAppSettings().bShowZeroHours, true,m_pMainFrame->m_pCAP->GetFPS());
+			}else{
+				strPos = ReftimeToString2(rt, AfxGetAppSettings().bShowZeroHours,false);
+			}
+			
+			strDur = ReftimeToString2(rtDur, AfxGetAppSettings().bShowZeroHours);
 		}
 	} else if (timeFormat == TIME_FORMAT_FRAME) {
 		strPos.Format(L"%I64d", rt);

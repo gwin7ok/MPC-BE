@@ -364,11 +364,18 @@ void COSD::DrawSeekbar()
 	rect.right = m_rectSlider.right;
 	DrawRect(rect, &m_brushBar);
 
+	const CAppSettings& s = AfxGetAppSettings();
+
 	if (m_SeekbarFont.GetSafeHandle()) {
-		CStringW text = ReftimeToString2(m_llSeekPos, false,true,m_pMainFrame->m_pCAP->GetFPS());
+		CStringW text ;
+		if(s.ShowOSD.Frame){
+			text = ReftimeToString2(m_llSeekPos, AfxGetAppSettings().bShowZeroHours,true,m_pMainFrame->m_pCAP->GetFPS());
+		}else{
+			text = ReftimeToString2(m_llSeekPos, AfxGetAppSettings().bShowZeroHours);
+		}
 		if (m_llSeekStop > 0) {
 			text.Append(L" / ");
-			text.Append(ReftimeToString2(m_llSeekStop, false));
+			text.Append(ReftimeToString2(m_llSeekStop, AfxGetAppSettings().bShowZeroHours));
 		}
 
 		m_MemDC.SelectObject(m_SeekbarFont);

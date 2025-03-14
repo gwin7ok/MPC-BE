@@ -3139,11 +3139,11 @@ void CMainFrame::DisplayPlaybackTime(int displayMilliseconds, int refreshMillise
 	const CAppSettings& s = AfxGetAppSettings();
 	CString strNow;
 	if(s.ShowOSD.Frame){
-    	strNow = ReftimeToString2(rtNow,false,true,m_pCAP->GetFPS());
+    	strNow = ReftimeToString2(rtNow,AfxGetAppSettings().bShowZeroHours,true,m_pCAP->GetFPS());
 	}else{
-		strNow = ReftimeToString2(rtNow,false,false);
+		strNow = ReftimeToString2(rtNow,AfxGetAppSettings().bShowZeroHours,false);
 	}
-	CString strDur = ReftimeToString2(rtDur,false);
+	CString strDur = ReftimeToString2(rtDur,AfxGetAppSettings().bShowZeroHours);
     strOSD.Format(L"%s / %s", strNow, strDur); // フォーマットを統一
     m_OSD.DisplayMessage(OSD_TOPLEFT, strOSD, refreshMilliseconds); // 表示ミリ秒に基づいて表示
 
@@ -10127,7 +10127,7 @@ void CMainFrame::OnNavigateChapters(UINT nID)
 				if (name.Length()) {
 					chapName.Format(L" - \"%s\"", name);
 				}
-				strOSD.Format(L"%s/%s %s%u/%u%s", ReftimeToString2(rt,false,true,m_pCAP->GetFPS()), ReftimeToString2(rtDur,false), ResStr(IDS_AG_CHAPTER2), id + 1, m_pCB->ChapGetCount(), chapName);
+				strOSD.Format(L"%s/%s %s%u/%u%s", ReftimeToString2(rt,false), ReftimeToString2(rtDur,false), ResStr(IDS_AG_CHAPTER2), id + 1, m_pCB->ChapGetCount(), chapName);
 				m_OSD.DisplayMessage(OSD_TOPLEFT, strOSD, 3000);
 			}
 			return;
