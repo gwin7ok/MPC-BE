@@ -3136,9 +3136,14 @@ void CMainFrame::DisplayPlaybackTime(int displayMilliseconds, int refreshMillise
             }
             break;
     }
-
-    CString strNow = ReftimeToString2(rtNow,false,true,m_pCAP->GetFPS());
-    CString strDur = ReftimeToString2(rtDur,false);
+	const CAppSettings& s = AfxGetAppSettings();
+	CString strNow;
+	if(s.ShowOSD.Frame){
+    	strNow = ReftimeToString2(rtNow,false,true,m_pCAP->GetFPS());
+	}else{
+		strNow = ReftimeToString2(rtNow,false,false);
+	}
+	CString strDur = ReftimeToString2(rtDur,false);
     strOSD.Format(L"%s / %s", strNow, strDur); // フォーマットを統一
     m_OSD.DisplayMessage(OSD_TOPLEFT, strOSD, refreshMilliseconds); // 表示ミリ秒に基づいて表示
 
