@@ -3476,8 +3476,6 @@ void CPlayerPlaylistBar::OnContextMenu(CWnd* /*pWnd*/, CPoint p)
 		submenu2.AppendMenuW(MF_SEPARATOR);
 		submenu2.AppendMenuW(MF_STRING | MF_ENABLED | (bReverse ? MF_CHECKED : MF_UNCHECKED), M_SORTREVERSE, ResStr(IDS_PLAYLIST_SORTREVERSE));
 		m.AppendMenuW(MF_STRING | MF_POPUP | (curPlayList.GetCount() ? MF_ENABLED : (MF_DISABLED | MF_GRAYED)), (UINT_PTR)submenu2.Detach(), ResStr(IDS_PLAYLIST_SORT));
-		m.AppendMenuW(MF_SEPARATOR);
-
 		m.AppendMenuW(MF_STRING | MF_ENABLED, M_REFRESH, ResStr(IDS_PLAYLIST_EXPLORER_REFRESH));
 		m.AppendMenuW(MF_SEPARATOR);
 		m.AppendMenuW(MF_STRING | MF_ENABLED | (s.bShufflePlaylistItems ? MF_CHECKED : MF_UNCHECKED), M_SHUFFLE, ResStr(IDS_PLAYLIST_SHUFFLE));
@@ -5071,9 +5069,9 @@ int CPlayerPlaylistBar::TGetFocusedElement() const
 
 void CPlayerPlaylistBar::CloseMedia() const
 {
-	if (m_nCurPlaybackListId == m_tabs[m_nCurPlayListIndex].id) {
-		m_pMainFrame->SendMessageW(WM_COMMAND, ID_FILE_CLOSEPLAYLIST);
-	}
+    if (m_nCurPlaybackListId == m_tabs[m_nCurPlayListIndex].id) {
+        m_pMainFrame->CloseMedia(); // CMainFrameのCloseMedia関数を呼び出す
+    }
 }
 
 void CPlayerPlaylistBar::CopyToClipboard()
