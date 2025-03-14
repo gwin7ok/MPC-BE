@@ -16295,6 +16295,16 @@ void CMainFrame::SetAlwaysOnTop(int i)
 	}
 }
 
+void CMainFrame::StopOSDPlaybackTime()
+{
+	// 再生時間表示を停止するためのタイマーを停止
+	KillTimer(TIMER_REFRESH_PLAYBACK_TIME);
+	KillTimer(TIMER_HIDE_PLAYBACK_TIME);
+
+	// OSDの再生時間表示をクリア
+	m_OSD.ClearMessage(OSD_TOPLEFT);
+}
+
 ISubStream *InsertSubStream(std::list<CComPtr<ISubStream>>* subStreams, const CComPtr<ISubStream>& theSubStream)
 {
 	return subStreams->emplace_back(theSubStream).p;
@@ -17679,6 +17689,10 @@ BOOL CMainFrame::OpenCurPlaylistItem(REFERENCE_TIME rtStart/* = INVALID_TIME*/, 
 
 BOOL CMainFrame::OpenFile(const CString fname, REFERENCE_TIME rtStart/* = INVALID_TIME*/, BOOL bAddRecent/* = TRUE*/)
 {
+	   // 他の動画を開く前にOSDの再生時間表示を停止
+	   StopOSDPlaybackTime();
+
+
 	std::unique_ptr<OpenMediaData> p(m_wndPlaylistBar.GetCurOMD(rtStart));
 	if (p) {
 		auto pFileData = dynamic_cast<OpenFileData*>(p.get());
@@ -17787,6 +17801,12 @@ bool CMainFrame::DisplayChange()
 
 void CMainFrame::CloseMedia(BOOL bNextIsOpened/* = FALSE*/)
 {
+	  // OSDの再生時間表示を停止
+	  StopOSDPlaybackTime();
+
+	  // 動画を閉じる際にFPSをリセット
+	  m_wndSubresyncBar.SetFPS(0.0);
+  
 	if (m_eMediaLoadState == MLS_CLOSING || m_eMediaLoadState == MLS_CLOSED) {
 		return;
 	}

@@ -1402,6 +1402,7 @@ private:
 	void SaveHistory();
 
 	void DisplayPlaybackTime(int displayMilliseconds, int refreshMilliseconds);
+    void StopOSDPlaybackTime(); // OSDの再生時間表示を停止するメソッド
     // 他のパブリックメソッド...
     REFERENCE_TIME GetPlaybackTime() const;
 };
