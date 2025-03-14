@@ -243,7 +243,7 @@ void CPlayerStatusBar::SetStatusTimer(REFERENCE_TIME rtNow, REFERENCE_TIME rtDur
 			strPos = ReftimeToString(rt, bShowZeroHours);
 			strDur = ReftimeToString(rtDur, false);
 		} else {
-			strPos = ReftimeToString2(rt, bShowZeroHours);
+			strPos = ReftimeToString2(rt, bShowZeroHours, true,m_pMainFrame->m_pCAP->GetFPS());
 			strDur = ReftimeToString2(rtDur, false);
 		}
 	} else if (timeFormat == TIME_FORMAT_FRAME) {
