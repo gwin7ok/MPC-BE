@@ -2372,7 +2372,7 @@ CStringW ReftimeToString2(const REFERENCE_TIME rt, bool showZeroHours, bool show
 
     CStringW str;
     if (showFrames && fps > 0.0) {
-        int frames = (int)(temp_rt * fps / UNITS);
+        int frames = (int)round(temp_rt * fps / UNITS);
         if (showZeroHours || hours > 0) {
             str.Format(L"%02d:%02d:%02d.%02d [FPS:%.2f]", hours, minutes, seconds, frames, fps);
         } else {
