@@ -105,7 +105,8 @@ TimeCode_t				ReftimeToTimecode(const REFERENCE_TIME rt);
 TimeCode_t				ReftimeToHMS(const REFERENCE_TIME rt); // seconds rounded to the nearest value
 REFERENCE_TIME			TimecodeToReftime(const TimeCode_t tc);
 CStringW				ReftimeToString(const REFERENCE_TIME rt, bool showZeroHours = true);  // hh:mm::ss.millisec
-CStringW				ReftimeToString2(const REFERENCE_TIME rt, bool showZeroHours = true); // hh:mm::ss (round)
+
+CStringW				ReftimeToString2(const REFERENCE_TIME rt, bool showZeroHours = false, bool showFrames = false, double fps = 0.0); // hh:mm::ss (round)
 
 extern DVD_HMSF_TIMECODE	RT2HMSF(REFERENCE_TIME rt, double fps = 0); // use to remember the current position
 extern DVD_HMSF_TIMECODE	RT2HMS_r(REFERENCE_TIME rt);                // use only for information (for display on the screen)

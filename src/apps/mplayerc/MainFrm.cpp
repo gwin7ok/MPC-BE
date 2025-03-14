@@ -646,7 +646,9 @@ CMainFrame::CMainFrame() :
 	m_bMainIsMPEGSplitter(false),
 	m_abRepeatPositionAEnabled(false),
 	m_abRepeatPositionBEnabled(false)
+	
 {
+	m_wndSubresyncBar.SetFPS(0.0);
 	m_Lcd.SetVolumeRange(0, 100);
 
 	// Remove the lines-splitters between bars
@@ -3127,7 +3129,7 @@ void CMainFrame::DisplayPlaybackTime(int displayMilliseconds, int refreshMillise
             break;
     }
 
-    CString strNow = ReftimeToString2(rtNow,false);
+    CString strNow = ReftimeToString2(rtNow,false,true,m_pCAP->GetFPS());
     CString strDur = ReftimeToString2(rtDur,false);
     strOSD.Format(L"%s / %s", strNow, strDur); // フォーマットを統一
     m_OSD.DisplayMessage(OSD_TOPLEFT, strOSD, refreshMilliseconds); // 表示ミリ秒に基づいて表示

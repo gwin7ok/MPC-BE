@@ -1063,23 +1063,7 @@ CStringW ReftimeToString(REFERENCE_TIME rt, bool showZeroHours /* = true*/)
 	return str;
 }
 
-// hour, minute, second (round)
-CStringW ReftimeToString2(REFERENCE_TIME rt, bool showZeroHours /* = true*/)
-{
-	if (rt == INVALID_TIME) {
-		return L"INVALID TIME";
-	}
 
-	TimeCode_t tc = ReftimeToHMS(rt);
-	CStringW str;
-	if (tc.Hours || showZeroHours) {
-		str.Format(L"%02d:%02d:%02d", tc.Hours, tc.Minutes, tc.Seconds);
-	} else {
-		str.Format(L"%02d:%02d", tc.Minutes, tc.Seconds);
-	}
-
-	return str;
-}
 
 DVD_HMSF_TIMECODE RT2HMSF(REFERENCE_TIME rt, double fps) // use to remember the current position
 {
@@ -2369,4 +2353,37 @@ inline const LONGLONG GetPerfCounter()
 		// ms to 100ns units
 		return timeGetTime() * 10000;
 	}
+}
+
+CStringW ReftimeToString2(const REFERENCE_TIME rt, bool showZeroHours, bool showFrames, double fps)
+{
+    if (rt == INVALID_TIME) {
+        return L"INVALID TIME";
+    }
+
+    REFERENCE_TIME temp_rt = rt; // rtを変更しないようにするために一時変数を使用
+
+    int hours = (int)(temp_rt / (3600 * UNITS));
+    temp_rt -= hours * 3600 * UNITS;
+    int minutes = (int)(temp_rt / (60 * UNITS));
+    temp_rt -= minutes * 60 * UNITS;
+    int seconds = (int)(temp_rt / UNITS);
+    temp_rt -= seconds * UNITS;
+
+    CStringW str;
+    if (showFrames && fps > 0.0) {
+        int frames = (int)(temp_rt * fps / UNITS);
+        if (showZeroHours || hours > 0) {
+            str.Format(L"%02d:%02d:%02d.%02d[FPS:%.2f]", hours, minutes, seconds, frames, fps);
+        } else {
+            str.Format(L"%02d:%02d.%02d[FPS:%.2f]", minutes, seconds, frames, fps);
+        }
+    } else {
+        if (showZeroHours || hours > 0) {
+            str.Format(L"%02d:%02d:%02d", hours, minutes, seconds);
+        } else {
+            str.Format(L"%02d:%02d", minutes, seconds);
+        }
+    }
+    return str;
 }
