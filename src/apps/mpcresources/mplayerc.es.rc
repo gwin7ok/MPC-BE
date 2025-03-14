@@ -291,11 +291,12 @@ BEGIN
                     "Button",BS_AUTOCHECKBOX | BS_TOP | BS_MULTILINE | WS_TABSTOP,129,112,156,17
     GROUPBOX        "Otros",IDC_STATIC,124,135,167,84,WS_GROUP
     CONTROL         "Icono de bandeja",IDC_CHECK3,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,129,147,156,9
-    CONTROL         "Mostrar OSD (requiere reinicio)",IDC_SHOW_OSD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,129,159,156,9
-    CONTROL         "Mostrar nombre de archivo multimedia",IDC_CHECK14,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,138,168,148,9
-    CONTROL         "Mostrar tiempo de búsqueda",IDC_CHECK15,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,138,176,148,9
-    CONTROL         "Always display the playback time",IDC_CHECK_SHOW_PLAYBACK_TIME,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,138,184,148,9
-    CONTROL         "Deshabilitar menú 'Abrir Disco'",IDC_CHECK10,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,129,196,156,9
+    CONTROL         "Mostrar OSD (requiere reinicio)",IDC_SHOW_OSD,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,129,157,156,9
+    CONTROL         "Mostrar nombre de archivo multimedia",IDC_CHECK14,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,138,165,148,9
+    CONTROL         "Mostrar tiempo de búsqueda",IDC_CHECK15,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,138,173,148,9
+    CONTROL         "Always display the playback time",IDC_CHECK_SHOW_PLAYBACK_TIME,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,138,181,148,9
+    CONTROL         "Displaying frames less than one second",IDC_CHECK_SHOW_FRAME,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,138,189,148,9
+    CONTROL         "Deshabilitar menú 'Abrir Disco'",IDC_CHECK10,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,129,198,156,9
     CONTROL         "Mayor prioridad para el proceso",IDC_CHECK9,"Button",BS_AUTOCHECKBOX | WS_TABSTOP,129,208,156,9
     GROUPBOX        "Tiempo de espera de red",IDC_STATIC,124,222,167,41,WS_GROUP
     LTEXT           "Conexión:",IDC_STATIC,129,233,96,8
