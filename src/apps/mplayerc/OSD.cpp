@@ -365,7 +365,7 @@ void COSD::DrawSeekbar()
 	DrawRect(rect, &m_brushBar);
 
 	if (m_SeekbarFont.GetSafeHandle()) {
-		CStringW text = ReftimeToString2(m_llSeekPos, false);
+		CStringW text = ReftimeToString2(m_llSeekPos, false,true,m_pMainFrame->m_pCAP->GetFPS());
 		if (m_llSeekStop > 0) {
 			text.Append(L" / ");
 			text.Append(ReftimeToString2(m_llSeekStop, false));

@@ -196,8 +196,6 @@ class CMainFrame : public CFrameWnd, public CDropTarget, public CDPI
 
 	CComPtr<IMadVRTextOsd>			m_pMVTO;
 
-	CComPtr<IAllocatorPresenter>	m_pCAP;
-	CLSID m_clsidCAP = GUID_NULL;
 
 	CComPtr<IMadVRSubclassReplacement> m_pMVRSR;
 	CComPtr<IMadVRSettings> m_pMVRS;
@@ -1402,6 +1400,9 @@ private:
 	void SaveHistory();
 
 public:
+	CComPtr<IAllocatorPresenter>	m_pCAP;
+	CLSID m_clsidCAP = GUID_NULL;
+
 	void DisplayPlaybackTime(int displayMilliseconds, int refreshMilliseconds);
     void StopOSDPlaybackTime(); // OSDの再生時間表示を停止するメソッド
     void StartOSDPlaybackTime(); // OSDの再生時間表示を開始するメソッド

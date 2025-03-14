@@ -10122,7 +10122,7 @@ void CMainFrame::OnNavigateChapters(UINT nID)
 				if (name.Length()) {
 					chapName.Format(L" - \"%s\"", name);
 				}
-				strOSD.Format(L"%s/%s %s%u/%u%s", ReftimeToString2(rt,false), ReftimeToString2(rtDur,false), ResStr(IDS_AG_CHAPTER2), id + 1, m_pCB->ChapGetCount(), chapName);
+				strOSD.Format(L"%s/%s %s%u/%u%s", ReftimeToString2(rt,false,true,m_pCAP->GetFPS()), ReftimeToString2(rtDur,false), ResStr(IDS_AG_CHAPTER2), id + 1, m_pCB->ChapGetCount(), chapName);
 				m_OSD.DisplayMessage(OSD_TOPLEFT, strOSD, 3000);
 			}
 			return;
