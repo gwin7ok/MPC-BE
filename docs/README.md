@@ -66,3 +66,8 @@ MPC-BE makes use of the following 3rd party code:
 | zlib              | zlib License        | https://zlib.net/                                     |
 | bs2b              | MIT License         | https://bs2b.sourceforge.net/                         |
 | VVdeC             | BSD License         | https://github.com/fraunhoferhhi/vvdec/               |
+
+# MPC-BE
+
+New features added
+![Player Settings]("./docs/MPC-BE new function addition option screen.png")
