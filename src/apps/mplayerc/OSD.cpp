@@ -368,7 +368,7 @@ void COSD::DrawSeekbar()
 
 	if (m_SeekbarFont.GetSafeHandle()) {
 		CStringW text ;
-		if(s.ShowOSD.Frame){
+		if(s.ShowOSD.Frame && m_pMainFrame->m_pCAP){
 			text = ReftimeToString2(m_llSeekPos, AfxGetAppSettings().bShowZeroHours,true,m_pMainFrame->m_pCAP->GetFPS());
 		}else{
 			text = ReftimeToString2(m_llSeekPos, AfxGetAppSettings().bShowZeroHours);

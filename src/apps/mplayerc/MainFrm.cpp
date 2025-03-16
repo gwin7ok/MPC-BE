@@ -3138,7 +3138,7 @@ void CMainFrame::DisplayPlaybackTime(int displayMilliseconds, int refreshMillise
     }
 	const CAppSettings& s = AfxGetAppSettings();
 	CString strNow;
-	if(s.ShowOSD.Frame){
+	if(s.ShowOSD.Frame && m_pCAP!=nullptr){
     	strNow = ReftimeToString2(rtNow,AfxGetAppSettings().bShowZeroHours,true,m_pCAP->GetFPS());
 	}else{
 		strNow = ReftimeToString2(rtNow,AfxGetAppSettings().bShowZeroHours,false);

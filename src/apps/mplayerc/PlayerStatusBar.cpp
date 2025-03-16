@@ -244,7 +244,7 @@ void CPlayerStatusBar::SetStatusTimer(REFERENCE_TIME rtNow, REFERENCE_TIME rtDur
 			strPos = ReftimeToString(rt, AfxGetAppSettings().bShowZeroHours);
 			strDur = ReftimeToString(rtDur, AfxGetAppSettings().bShowZeroHours);
 		} else {
-			if(s.ShowOSD.Frame){
+			if(s.ShowOSD.Frame && m_pMainFrame->m_pCAP){
 				strPos = ReftimeToString2(rt, AfxGetAppSettings().bShowZeroHours, true,m_pMainFrame->m_pCAP->GetFPS());
 			}else{
 				strPos = ReftimeToString2(rt, AfxGetAppSettings().bShowZeroHours,false);
